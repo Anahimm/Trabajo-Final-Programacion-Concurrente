@@ -12,7 +12,7 @@ public class QuickSort {
 	}
 
 	private static int partition(int[] array, int izq, int der) { //funcion que realiza el ordenamiento de las particiones
-		int pivote = mediana(array, izq, der); //selecciona el ultimo elemento como pivote
+		int pivote = mediana(array, izq, der); //selecciona el elemento medio como pivote
 		int i = izq - 1;		//inicia i
 		for (int j = izq; j < der; j++) { //se recorre el array a ordenar
 			if (array[j] < pivote) {    //si el elemento en la posición j es menor al pivote

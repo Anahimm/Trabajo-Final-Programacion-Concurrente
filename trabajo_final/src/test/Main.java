@@ -35,7 +35,7 @@ public class Main implements Runnable{
 		Runtime runtime = Runtime.getRuntime();	
 		int numeroNucleos = runtime.availableProcessors(); //La cantidad de hilos es igual a la cantidad de procesadores lógicos disponibles en mi PC
 		
-		array1 = Array.ArrayAleatorio(1000000, 1, 20000); //se declaran la longuitud y rango 
+		array1 = Array.ArrayAleatorio(10, 1, 20000); //se declaran la longuitud y rango 
 		array2 = Array.ArrayDescendente(10);		//para ambos arrays
 		
 		int n = array1.length;
@@ -43,7 +43,7 @@ public class Main implements Runnable{
 		double tiempoInicial;
 		double tiempoFinal;
 		
-		//VERSION SECUENCIAL
+		//VERSION ALEATORIA SECUENCIAL
 		tiempoInicial = System.nanoTime(); //comienzo del contador 
 		int arrayCopiaSecuencial[] = Arrays.copyOf(array1, array1.length);
 		QuickSort.quickSort(arrayCopiaSecuencial, 0, array1.length -1);
@@ -53,7 +53,7 @@ public class Main implements Runnable{
 		
 		
 		
-		//VERSION CONCURRENTE
+		//VERSION ALEATORIA CONCURRENTE
 		tiempoInicial = System.nanoTime();
 		Thread[] hilos = new Thread[numeroNucleos];
 		for (int i = 0; i < numeroNucleos; i++) { //en este for se reparten las partes en las que cada hilo trabajará
@@ -84,7 +84,50 @@ public class Main implements Runnable{
 		System.out.println("La ejecucion concurrente de quick sort demoró "+tiempoFinal/1000+ " microsegundos\n"); 
 		
 		
+	/*	//VERSION DESCENDENTE SECUENCIAL
+		tiempoInicial = System.nanoTime(); //comienzo del contador 
+		int arrayCopiaSecuencial2[] = Arrays.copyOf(array2, array2.length);
+		QuickSort.quickSort(arrayCopiaSecuencial2, 0, array2.length -1);
+		tiempoFinal = System.nanoTime() - tiempoInicial; //finaliza el contador
+		System.out.println("La ejecucion secuencial de quick sort demoró "+tiempoFinal/1000+ " microsegundos\n"); 
+		
+		
+		
+		
+		//VERSION DESCENDENTE CONCURRENTE
+		tiempoInicial = System.nanoTime();
+		Thread[] hilos2 = new Thread[numeroNucleos];
+		for (int i = 0; i < numeroNucleos; i++) { //en este for se reparten las partes en las que cada hilo trabajará
+			int inicio = i * parte;
+			int fin;
+			if (i == numeroNucleos -1) {
+				fin = n;
+			}else {
+				fin = inicio + parte;
+			}
+			hilos2[i] = new Thread(new Main(inicio, fin, i));	
+		}
+		
+		
+		for (int i = 0; i < numeroNucleos; i++) { //inicio de los hilos
+			hilos2[i].start();
+		}
+		
+		for (int i = 0; i < numeroNucleos; i++) {
+			try {
+				hilos2[i].join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		tiempoFinal = System.nanoTime() - tiempoInicial;
+		System.out.println("La ejecucion concurrente de quick sort demoró "+tiempoFinal/1000+ " microsegundos\n"); 
+		
+		*/
+		
 
+		
 	}
 
 }
